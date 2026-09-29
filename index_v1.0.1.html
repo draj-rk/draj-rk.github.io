@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dheeraj RK</title>
+  <style>
+    p{
+            margin-left: 40px;
+    }
+    .year-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .year-button {
+      padding: 10px 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #f5f5f5;
+      color: #333;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .year-button:hover,
+    .year-button.active {
+      background-color: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .year-content {
+      display: none;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background-color: #fafafa;
+    }
+
+    .year-content.active {
+      display: block;
+    }
+    
+  </style>
+</head>
+  
+<body>
+  <h1>Dheeraj RK</h1>
+  <h2>PhD in Applied AI</h2>
+  <p><a href="https://hdl.handle.net/2117/443328" target="_blank" rel="noopener noreferrer">AI-Driven Multi-Antenna Designs for Next Generations of Wireless Communication Systems</a></p>
+  <p>From Centre Tecnològic de Telecomunicacions de Catalunya (CTTC) and Universitat Politècnica de Catalunya (UPC) in September 2025</p>
+  <h2>Current Position: Scientific Researcher - R2 at CTTC, Barcelona</h2>
+  <p><a href="https://www.linkedin.com/in/dheeraj-rk2/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+
+  <hr width="100%" size="2">
+
+  <div class="year-buttons" role="tablist" aria-label="Select a year">
+    <button
+      class="year-button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="content-2026"
+      data-year="2026">
+      2026 (Ongoing)
+    </button>
+
+    <button
+      class="year-button active"
+      role="tab"
+      aria-selected="true"
+      aria-controls="content-2025"
+      data-year="2025">
+      2025
+    </button>
+
+    <button
+      class="year-button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="content-2024"
+      data-year="2024">
+      2024
+    </button>
+
+    <button
+      class="year-button"
+      role="tab"
+      aria-selected="false"
+      aria-controls="content-2023"
+      data-year="2023">
+      2023
+    </button>
+  </div>
+
+  <div id="content-2026" class="year-content" role="tabpanel">
+    <p>This is the paragraph content for 2026. The year is currently ongoing.</p>
+  </div>
+
+  <div id="content-2025" class="year-content active" role="tabpanel">
+    <p>This is the paragraph content for 2025.</p>
+  </div>
+
+  <div id="content-2024" class="year-content" role="tabpanel">
+    <p>This is the paragraph content for 2024.</p>
+  </div>
+
+  <div id="content-2023" class="year-content" role="tabpanel">
+    <p>This is the paragraph content for 2023.</p>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll(".year-button");
+    const contents = document.querySelectorAll(".year-content");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const selectedYear = button.dataset.year;
+
+        // Update button states
+        buttons.forEach(btn => {
+          const isSelected = btn === button;
+
+          btn.classList.toggle("active", isSelected);
+          btn.setAttribute("aria-selected", isSelected);
+        });
+
+        // Show the matching content
+        contents.forEach(content => {
+          content.classList.toggle(
+            "active",
+            content.id === `content-${selectedYear}`
+          );
+        });
+      });
+    });
+  </script>
+  
+</body>
+</html>

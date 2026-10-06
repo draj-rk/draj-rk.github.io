@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dheeraj RK | Applied AI Researcher</title>
+
+  <style>
+    :root {
+      --paper: #f4f0e6;
+      --paper-light: #fbfaf6;
+      --border: #c8c4bb;
+      --text: #2f3437;
+      --muted: #6d7377;
+      --accent: #385d73;
+      --accent-dark: #294658;
+      --shadow: rgba(70, 70, 70, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 30px;
+      min-height: 100vh;
+      background: var(--paper);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.6;
+    }
+
+    .page-layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .sidebar,
+    .main-screen {
+      background: var(--paper-light);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow:
+        inset 0 0 18px rgba(80, 80, 80, 0.12),
+        0 5px 18px var(--shadow);
+    }
+
+    .sidebar {
+      align-self: start;
+      padding: 28px 20px;
+      text-align: center;
+      position: sticky;
+      top: 25px;
+    }
+
+    .profile-holder {
+      width: 125px;
+      height: 125px;
+      margin: 0 auto 18px;
+      border: 3px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #e5e2da;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .profile-holder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 4px;
+      font-size: 23px;
+      color: var(--accent-dark);
+    }
+
+    .status {
+      margin: 0 0 25px;
+      color: var(--muted);
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    .navigation {
+      display: grid;
+      gap: 10px;
+    }
+
+    .nav-button {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #eeece5;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .nav-button:hover,
+    .nav-button.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .main-screen {
+      min-height: 720px;
+      padding: 42px 52px;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      color: var(--accent-dark);
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.1;
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    h3 {
+      color: var(--accent-dark);
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin: 12px 0;
+    }
+
+    ul {
+      padding-left: 25px;
+    }
+
+    a {
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: var(--accent-dark);
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+
+    .intro-card {
+      padding: 18px 22px;
+      border-left: 4px solid var(--accent);
+      background: #f0eee8;
+      border-radius: 8px;
+    }
+
+    .year-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .year-button {
+      padding: 9px 15px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: #eeece5;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .year-button:hover,
+    .year-button.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .year-content {
+      display: none;
+      padding: 18px 22px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f5f3ed;
+    }
+
+    .year-content.active {
+      display: block;
+    }
+
+    .social-links {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 15px;
+      }
+
+      .page-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .main-screen {
+        padding: 28px 22px;
+      }
+
+      .navigation {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .navigation {
+        grid-template-columns: 1fr;
+      }
+    }
+	
+	.work-education-container {
+	  display: grid;
+	  grid-template-columns: 1fr 1fr;
+	  gap: 2rem;
+	  margin-top: 1.5rem;
+	}
+
+	.work-column,
+	.education-column {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 1.5rem;
+	}
+
+	.work-column h2,
+	.education-column h2 {
+	  margin-bottom: 1rem;
+	  font-size: 1.5rem;
+	  font-weight: 600;
+	}
+
+	.work-entry,
+	.education-entry {
+	  display: flex;
+	  gap: 1rem;
+	  padding-bottom: 1.5rem;
+	  border-bottom: 1px solid #e0e0e0;
+	}
+
+	.work-entry:last-child,
+	.education-entry:last-child {
+	  border-bottom: none;
+	  padding-bottom: 0;
+	}
+
+	.entry-logo {
+	  flex-shrink: 0;
+	  width: 60px;
+	  height: 60px;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	}
+
+	.logo-placeholder {
+	  width: 100%;
+	  height: 100%;
+	  object-fit: contain;
+	  background-color: #fbfaf6;
+	  border-radius: 4px;
+	}
+
+	.entry-content {
+	  flex: 1;
+	}
+
+	.entry-content h3 {
+	  margin: 0.5rem 0;
+	  font-size: 1.1rem;
+	  font-weight: 600;
+	}
+
+	.entry-content .date {
+	  margin: 0;
+	  font-size: 0.9rem;
+	  color: #666;
+	  font-weight: 500;
+	}
+
+	.entry-content .company,
+	.entry-content .university {
+	  margin: 0.25rem 0;
+	  font-size: 0.95rem;
+	  color: #555;
+	  font-weight: 500;
+	}
+
+	.entry-content .description {
+	  margin: 0.5rem 0 0 0;
+	  font-size: 0.9rem;
+	  color: #666;
+	  line-height: 1.4;
+	}
+
+	/* Responsive design for smaller screens */
+	@media (max-width: 768px) {
+	  .work-education-container {
+		grid-template-columns: 1fr;
+	  }
+	}
+
+  </style>
+</head>
+
+<body>
+  <div class="page-layout">
+
+    <!-- Left column -->
+    <aside class="sidebar">
+      <div class="profile-holder">
+	  <img src="images/pp.png" alt="Dheeraj RK">
+	  </div>
+
+
+      <h2>Dheeraj RK</h2>
+      <p class="status">Open to AI Strategy and Applied AI roles</p>
+
+      <nav class="navigation" aria-label="Main navigation">
+        <button class="nav-button active" data-section="about">
+          About
+        </button>
+
+        <button class="nav-button" data-section="research">
+          Expertise
+        </button>
+
+        <button class="nav-button" data-section="work">
+          Work | Edu
+        </button>
+
+        <button class="nav-button" data-section="awards">
+          Awards
+        </button>
+      </nav>
+
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/dheeraj-rk2/"
+           target="_blank"
+           rel="noopener noreferrer">
+          LinkedIn
+        </a>
+        <br>
+
+        <a href="https://scholar.google.com/citations?user=IKycq7yqIC4C&hl=en"
+           target="_blank"
+           rel="noopener noreferrer">
+          Google Scholar
+        </a>
+        <br>
+
+        <a href="https://github.com/draj-rk"
+           target="_blank"
+           rel="noopener noreferrer">
+          GitHub
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main webpage screen -->
+    <main class="main-screen">
+
+      <!-- About section -->
+      <section id="about" class="section active">
+        <h1>Dheeraj RK</h1>
+        <h2>PhD in Applied AI</h2>
+
+        <div class="intro-card">
+          <p>
+            AI researcher currently working at the intersection of wireless communication
+            and machine learning. <br>
+			Interested in AI strategy, governance, risk analysis and mitigation.
+          </p>
+        </div>
+
+        <hr>
+		
+		<h2>Current Employment</h2>
+
+        <p>
+          Scientific Researcher — R2 at CTTC, Barcelona.
+        </p>
+		
+		<hr>
+
+        <h2>Thesis</h2>
+
+        <p>
+          <a href="https://hdl.handle.net/2117/443328"
+             target="_blank"
+             rel="noopener noreferrer">
+            AI-Driven Multi-Antenna Designs for Next Generations of Wireless
+            Communication Systems
+          </a>
+        </p>
+
+        <p>
+          PhD completed at Centre Tecnològic de Telecomunicacions de Catalunya
+          (CTTC) and Universitat Politècnica de Catalunya (UPC) in September
+          2025.
+        </p>
+		
+		<p>
+          Shortlisted among the final four nominees for the
+          <a href="https://www.etsi.org/research-innovation-awards/"
+             target="_blank"
+             rel="noopener noreferrer">
+            ETSI Young Researcher Award 2026
+          </a>.
+        </p>
+      </section>
+
+      <!-- Research section -->
+      <section id="research" class="section">
+        <h1>Expertise</h1>
+
+        <p>
+          Selected research output over the years. <br>
+		  The PhD research period focused on applied AI with emphasis on scalable and explainable
+          machine learning solutions.
+        </p>
+
+        <hr>
+
+        <div class="year-buttons" role="tablist" aria-label="Select a research year">
+          <button class="year-button"
+                  role="tab"
+                  aria-selected="false"
+                  data-year="2026">
+            2026 (Ongoing)
+          </button>
+
+          <button class="year-button active"
+                  role="tab"
+                  aria-selected="true"
+                  data-year="2025">
+            2025
+          </button>
+
+          <button class="year-button"
+                  role="tab"
+                  aria-selected="false"
+                  data-year="2024">
+            2024
+          </button>
+
+          <button class="year-button"
+                  role="tab"
+                  aria-selected="false"
+                  data-year="2023">
+            2023
+          </button>
+        </div>
+
+        <div id="content-2026" class="year-content">
+          <h3>Telecom Pre-standardisation activity under ETSI</h3>
+		  
+		  <p>
+            <strong>Delegate of CTTC at Industry Specification Group MAT:</strong>
+            To build wider consensus for 3GPP-based 6G systems working in consortium consisting of BBC, Eurecom, Imperial College London.
+          </p>
+		  
+		  <p>
+            <strong>Publications:</strong>
+            <a href="https://arxiv.org/abs/2607.24226"
+               target="_blank"
+               rel="noopener noreferrer">
+              IEEE CSCN 2026
+            </a>
+            |
+            <a href="https://www.etsi.org/technical-groups/mat/"
+               target="_blank"
+               rel="noopener noreferrer">
+              Group Report 2025
+            </a>
+          </p>
+		  
+		  
+		  <h3>Communication with Feedback</h3>
+
+          <p>
+            <strong>AI Strategy:</strong>
+            Autoencoders, Transformers, and Reinforcement Learning agents.
+          </p>
+
+          <p>
+            <strong>Related fields:</strong>
+            Time-series analysis and forecasting, LiDAR sensor communication,
+            and multi-agent coordination.
+          </p>
+
+          <ul>
+            <li>Ongoing work.</li>
+          </ul>
+        </div>
+
+        <div id="content-2025" class="year-content active">
+          <h3>Precoding Policies to Serve Large Numbers of Users</h3>
+
+          <p>
+            <strong>AI Strategy:</strong>
+            Viewing the wireless channel as a graph and applying self-supervised
+            training.
+          </p>
+
+          <p><strong>Outcomes:</strong></p>
+
+          <ul>
+            <li>Graph Neural Networks achieve 10× faster convergence.</li>
+            <li>GNNs require 100× fewer trainable parameters than MLPs.</li>
+            <li>GNNs provide a scalable solution for up to 64 users.</li>
+          </ul>
+
+          <p>
+            <strong>Publications:</strong>
+            <a href="https://ieeexplore.ieee.org/document/11072707"
+               target="_blank"
+               rel="noopener noreferrer">
+              IEEE Access 2025
+            </a>
+            |
+            <a href="https://ieeexplore.ieee.org/document/11140576"
+               target="_blank"
+               rel="noopener noreferrer">
+              ICMLCN 2025 (Barcelona, Spain)
+            </a>
+          </p>
+
+          <p>
+            <strong>Related fields:</strong>
+            Explainable AI and heterogeneous graph neural networks.
+          </p>
+        </div>
+
+        <div id="content-2024" class="year-content">
+          <h3>Channel Estimation in Large Telecommunication Systems</h3>
+
+          <p>
+            <strong>AI Strategy:</strong>
+            Processing pilots using 1D-CNN and GNN architectures instead of MLPs.
+          </p>
+
+          <p><strong>Outcomes:</strong></p>
+
+          <ul>
+            <li>
+              Shallow neural networks achieve one order of improvement at low
+              signal-to-noise ratios.
+            </li>
+            <li>
+              GNNs require five times fewer training samples than 1D-CNNs.
+            </li>
+            <li>1D-CNN provides a scalable solution.</li>
+          </ul>
+		  
+		  <p>
+            <strong>Publications:</strong>
+            <a href="https://ieeexplore.ieee.org/document/10781451"
+               target="_blank"
+               rel="noopener noreferrer">
+              IEEE Transactions MLCN 2024
+            </a>
+            |
+            <a href="https://ieeexplore.ieee.org/document/10976199"
+               target="_blank"
+               rel="noopener noreferrer">
+              CCNC 2025 (Las Vegas, USA)
+            </a>
+          </p>
+
+          <p>
+            <strong>Related fields:</strong>
+            Time-series forecasting, inference optimization, and pruning
+            techniques.
+          </p>
+        </div>
+
+        <div id="content-2023" class="year-content">
+          <h3>Digital Safety of Journalists</h3>
+
+          <p>
+            <strong>Technology:</strong>
+            Application of Blockchain Technology.
+          </p>
+
+          <ul>
+            <li>
+              Conducted semi-structured interviews with investigative journalists
+              and blockchain experts.
+            </li>
+            <li>
+              Blockchain can help protect identities and communications, log
+              security breaches, and enable decentralized data storage.
+            </li>
+            <li>
+              Presented the findings at the United Nations Office.
+            </li>
+          </ul>
+		  
+		  <p>
+            <strong>Publications:</strong>
+            <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=IKycq7yqIC4C&citation_for_view=IKycq7yqIC4C:UeHWp8X0CEIC"
+               target="_blank"
+               rel="noopener noreferrer">
+              Report and Policy Paper (UNO Vienna, Austria)
+            </a>
+          </p>
+
+          <p>
+            <strong>Related fields:</strong>
+            Interdisciplinary research and the need for digital literacy.
+          </p>
+        </div>
+      </section>
+
+      <!-- Work and education section -->
+	<section id="work" class="section">
+	  <h1>Work & Education</h1>
+
+	  <hr>
+
+	  <div class="work-education-container">
+		<!-- Work Column -->
+		<div class="work-column">
+		  <h2>Work</h2>
+
+		  <!-- Work Entry 1 -->
+		  <div class="work-entry">
+			<div class="entry-logo">
+			  <img src="images/cttc.png" alt="Company Logo" class="logo-placeholder">
+			</div>
+			<div class="entry-content">
+			  <p class="date">Mar 2025 - Present</p>
+			  <h3>Scientific Researcher - R2</h3>
+			  <p class="company">CTTC</p>
+			  <p class="description">Research on communication with feedback. ETSI Pre-standardization activity.</p>
+			  <p class="description">(2026, 2025) Team Coordinator at Mobile World Congress.</p>
+			</div>
+		  </div>
+
+		  <!-- Work Entry 2 -->
+		  <div class="work-entry">
+			<div class="entry-logo">
+			  <img src="images/cttc.png" alt="Company Logo" class="logo-placeholder">
+			</div>
+			<div class="entry-content">
+			  <p class="date">Sep 2020 - Feb 2025</p>
+			  <h3>Researcher - R1</h3>
+			  <p class="company">CTTC</p>
+			  <p class="description">Research on AI applied to telecommunications for 5G/6G. Participation in European and National (Spain) projects.</p>
+			  <p class="description">(2024) Local Committee member for AI/ML Training School (INTERACT).</p>
+			</div>
+		  </div>
+		  
+		  <!-- Work Entry 3 -->
+		  <div class="work-entry">
+			<div class="entry-logo">
+			  <img src="images/inf.png" alt="Company Logo" class="logo-placeholder">
+			</div>
+			<div class="entry-content">
+			  <p class="date">Jun 2020 - Aug 2020</p>
+			  <h3>Technical Operations</h3>
+			  <p class="company">Inflight VR, Barcelona</p>
+			  <p class="description">Internship covering TCP/IP and Network Management, VR Headset Data Analytics [Python].</p>
+			</div>
+		  </div>
+
+		  <!-- Work Entry 4 -->
+		  <div class="work-entry">
+			<div class="entry-logo">
+			  <img src="images/del.png" alt="Company Logo" class="logo-placeholder">
+			</div>
+			<div class="entry-content">
+			  <p class="date">Mar 2018 - Aug 2018</p>
+			  <h3>Cyber Risk Analyst</h3>
+			  <p class="company">Deloitte Touche Tohmatsu, Hong Kong</p>
+			  <p class="description">Internship covering Risk Assessment Services, Cyber Security Compliance Projects related to Hong Kong Monetary Authority Policies.</p>
+			</div>
+		  </div>
+		</div>
+
+		<!-- Education Column -->
+		<div class="education-column">
+		  <h2>Education</h2>
+
+		  <!-- Education Entry 1 -->
+		  <div class="education-entry">
+			<div class="entry-logo">
+			  <img src="images/cC.png" alt="University Logo" class="logo-placeholder">
+			</div>
+			<div class="entry-content">
+			  <p class="date">2021 - 2025</p>
+			  <h3>PhD in Applied AI</h3>
+			  <p class="university">CTTC & UPC Barcelona</p>
+			  <p class="description">Supervised by Dr. Carles Antòn-Haro (CTTC) and Dr. Xavier Mestre (CTTC).</p>
+			</div>
+		  </div>
+
+		  <!-- Education Entry 2 -->
+		  <div class="education-entry">
+			<div class="entry-logo">
+			  <img src="images/upc.png" alt="University Logo" class="logo-placeholder">
+			</div>
+			<div class="entry-content">
+			  <p class="date">2019 - 2020</p>
+			  <h3>Master's Degree in Applied Telecom and Engineering Management</h3>
+			  <p class="university">UPC Barcelona</p>
+			  <p class="description">Thesis under the supervision of Dr. Jesus Alcober.</p>
+			</div>
+		  </div>
+
+		  <!-- Education Entry 3 -->
+		  <div class="education-entry">
+			<div class="entry-logo">
+			  <img src="images/cityu.jpg" alt="University Logo" class="logo-placeholder">
+			</div>
+			<div class="entry-content">
+			  <p class="date">2014 - 2018</p>
+			  <h3>Bachelor's Degree BE (Honours) in Electronic and Communication Engineering</h3>
+			  <p class="university">City University of Hong Kong</p>
+			  <p class="description">(2018) Thesis under the supervision of Dr. Nelson Chan.</p>
+			  <p class="description">(2016) Formal exchange program at The University of British Columbia - Vancouver, Canada.</p>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</section>
+
+
+      <!-- Awards section -->
+      <section id="awards" class="section">
+        <h1>Awards & Skills</h1>
+
+        <hr>
+
+        <h2>Awards | Fellowships </h2>
+
+        <ul>
+          <li>
+            (2026) Shortlisted nominee for ETSI Young Researcher Award 2026 - 
+			Recognizes young researchers whose doctoral dissertation have had an impact on standardization in ETSI.
+          </li>
+		  <li>
+            (2024) Short Term Scientific Mission to conduct research stay at KU Leuven, Belgium.
+          </li>
+		  <li>
+            (2020) Predoctoral Fellowship - The Ministry of Science and Innovation, Spain.
+          </li>
+		  <li>
+            (2020) Citython Barcelona Winners – EIT Urban Mobility Challenge. 
+			One of the 3 winning teams of city-wide hackathon; Reward of 1.500 EUR. Role: Team lead of 3 members.
+          </li>
+		  <li>
+            (2019) Matricula de Honor: ICT-Based Entrepreneurship; Augmented Reality (C\# coding).
+			 Grade: 9,5; Honors grade given by UPC to top 5% of students in the academic year.
+          </li>
+		  <li>
+            (2018 - 2014) Full-Ride Scholar: HKSAR Top Scholarship for International Students.
+			Undergraduate Scholarship of 160.000 HKD/year  covering tuition, accommodation, and living expenses.
+          </li>
+        </ul>
+
+        <hr>
+
+        <h2>Skills</h2>
+
+        <ul>
+          <li>
+            Python, MATLAB, CUDA.
+          </li>
+          <li>
+            LLMs, Inference Optimization.
+          </li>
+		  <li>
+            Tools: Spyder, Linux, Weights & Biases, Spark.
+          </li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Main navigation buttons
+    const navButtons = document.querySelectorAll(".nav-button");
+    const sections = document.querySelectorAll(".section");
+
+    navButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedSection = button.dataset.section;
+
+        navButtons.forEach((navButton) => {
+          navButton.classList.toggle("active", navButton === button);
+        });
+
+        sections.forEach((section) => {
+          section.classList.toggle(
+            "active",
+            section.id === selectedSection
+          );
+        });
+      });
+    });
+
+    // Research year buttons
+    const yearButtons = document.querySelectorAll(".year-button");
+    const yearContents = document.querySelectorAll(".year-content");
+
+    yearButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedYear = button.dataset.year;
+
+        yearButtons.forEach((yearButton) => {
+          const isActive = yearButton === button;
+
+          yearButton.classList.toggle("active", isActive);
+          yearButton.setAttribute("aria-selected", isActive);
+        });
+
+        yearContents.forEach((content) => {
+          content.classList.toggle(
+            "active",
+            content.id === `content-${selectedYear}`
+          );
+        });
+      });
+    });
+  </script>
+</body>
+</html>
